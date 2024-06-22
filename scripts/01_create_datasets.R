@@ -55,6 +55,7 @@ table(row.names(panc8) %in% row.names(pbmc3k)) # check no. of genes shared betwe
 seu <- merge(x = pbmc3k, y = panc8, add.cell.ids = c("pbmc", "pancreas"), 
              project = "pbmc3k_panc8")
 rm(list = c("pbmc3k", "panc8")); gc(); 
+seu[['RNA']]  <- JoinLayers(object = seu[['RNA']])
 
 # Save object
 saveRDS(object=seu, file=output)
