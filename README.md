@@ -12,7 +12,7 @@ The Hitchhiker's Guide to  scRNA-seq course 2024
 
 <br>
 
-Repository: Projects to develop during the 'Bioinformatics for T-Cell immunology' course (08-12/07/2024) at [Instituto de Medicina Molecular](https://imm.medicina.ulisboa.pt/)
+Repository: Projects to develop during the 'The Hitchhiker's Guide to scRNA-seq' course (08-12/07/2024) at [Instituto de Medicina Molecular](https://imm.medicina.ulisboa.pt/)
 
 Maintainer: [Elo lab](https://elolab.utu.fi) 
 
