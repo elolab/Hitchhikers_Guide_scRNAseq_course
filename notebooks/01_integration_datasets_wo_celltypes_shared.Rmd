@@ -46,6 +46,7 @@ if ((!"matrixStats" %in% installed.packages()) | (packageVersion("matrixStats")>
   remotes::install_version("matrixStats", version="1.1.0")
 } 
 if (!"ComplexHeatmap" %in% installed.packages()) remotes::install_github("jokergoo/ComplexHeatmap")
+if (!"zellkonverter" %in% installed.packages()) BiocManager::install("zellkonverter")
 ```
 
 <br>
@@ -124,7 +125,6 @@ umap.unint <- DimPlot(seu, reduction = "umap.unintegrated", group.by = "batch")
 pca.unint + umap.unint
 ```
 
-
 <br>
 
 ### Celltype markers
@@ -188,7 +188,7 @@ seu.list <- lapply(X = seu.list, FUN = function(x) {
 ```{r plot independent sample analysis clusters, fig.width=10, fig.height=4}
 ## Plot independent sample analysis clusters
 umap.ind.samp.unint <- lapply(X = seu.list, FUN = function(x) {
-  DimPlot(x, reduction = "umap.unintegrated", group.by = "unintegrated_clusters", )
+  DimPlot(x, reduction = "umap.unintegrated", group.by = "unintegrated_clusters")
 })
 umap.ind.samp.unint$pbmc + umap.ind.samp.unint$pancreas
 ```
@@ -213,7 +213,7 @@ top50.up.cluster <- lapply(X = dge.markers.unint, FUN = function(x) {
     split(., .$cluster)
 }) 
 
-# Check intersection of top30 marker genes between clusters across batches
+# Check intersection of top50 marker genes between clusters across batches
 shared.genes <- list()
 for (i in names(top50.up.cluster$pbmc)) {
   for (ii in names(top50.up.cluster$pancreas)) {
@@ -221,7 +221,7 @@ for (i in names(top50.up.cluster$pbmc)) {
                                                                              top50.up.cluster$pancreas[[ii]]$gene)
   }
 }
-# Table with number of genes shared between pbmc vs pancreas clusters for the top30 upregulated genes per cluster
+# Table with number of genes shared between pbmc vs pancreas clusters for the top50 upregulated genes per cluster
 shared.genes.table <- as.data.frame(
   lapply(X = shared.genes, FUN = function(x) {
     unlist(lapply(x, length))
@@ -229,7 +229,6 @@ shared.genes.table <- as.data.frame(
 )
 
 ```
-
 
 ```{r independent sample analysis - dge (table)}
 ## Print table
@@ -250,10 +249,9 @@ ComplexHeatmap::Heatmap(matrix = as.matrix(shared.genes.table), name = "Shared g
 
 ```{r automatic cell annotation}
 ## Automatic cell annotation
-SaveH5Seurat(seu, filename = file.path("results", "seu.h5Seurat"))
-Convert(file.path("results", "seu.h5Seurat"), dest = "h5ad")
+# sce <- as.SingleCellExperiment(seu)
+# zellkonverter::writeH5AD(sce, file = file.path("../results", "pbmc3k_pancreas.h5ad"))
 ```
-
 
 <br>
 
