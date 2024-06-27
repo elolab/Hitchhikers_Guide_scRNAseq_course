@@ -1,5 +1,5 @@
 ---
-title: "The Hitchhiker's Guide to scRNA-seq"
+title: "Cell line integration task"
 author: ""
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: 
@@ -20,7 +20,7 @@ output:
 
 <br>
 
-# Notebook
+# Integration task
 
 <br>
 
@@ -39,14 +39,13 @@ knitr::opts_chunk$set(
 library("dplyr") 
 library("Seurat") # scRNA-seq analysis
 library("patchwork")
-if (!"SeuratWrappers" %in% installed.packages()) remotes::install_github("satijalab/seurat-wrappers", "seurat5")
 library("SeuratWrappers")
-if (!"batchelor" %in% installed.packages()) BiocManager::install("batchelor")
-if ((!"matrixStats" %in% installed.packages()) | (packageVersion("matrixStats")>"1.1.0")) {
-  remotes::install_version("matrixStats", version="1.1.0")
-} 
-if (!"ComplexHeatmap" %in% installed.packages()) remotes::install_github("jokergoo/ComplexHeatmap")
-if (!"zellkonverter" %in% installed.packages()) BiocManager::install("zellkonverter")
+```
+
+```{r dirs}
+## Output directories
+res.dir <- file.path("../results", "jurkat", c("plots", "tables", "objects"))
+for (folder in res.dir) if (!dir.exists(folder)) dir.create(path = folder, recursive = TRUE)
 ```
 
 <br>

@@ -1,5 +1,5 @@
 ---
-title: "The Hitchhiker's Guide to scRNA-seq"
+title: "Cross-tissue integration task"
 author: ""
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: 
@@ -20,9 +20,31 @@ output:
 
 <br>
 
-# Notebook
+# Integration task
 
 <br>
+
+This single-cell RNA-seq integration task describes an example of cross-tissue integration: human peripheral blood mononuclear cells (PBMCs) with human pancreatic islets. Both data sets were retrieved from the `SeuratData` (v.0.2.2.9001): 
+
+   + **PBMCs**: 
+   
+      + `pbmc3k` `SeuratData` data set (v.3.1.4): 3k human PBMCs from 10X Genomics 
+      
+      + no. of cells: 2,700
+  
+   + **Pancreas**: 
+   
+      + `panc8` `SeuratData` data set (v.3.0.2): 8 human pancreas data sets across five technologies (only included the data set `indrop1`)
+      
+      + no. of cells (for `indrop1`): 1,937
+      
+<br>
+
+The identity of the data set - `pbmc` or `pancreas` - for every cell was saved in the `Seurat` `meta.data` column variable `batch`. The ground-truth cell identities were also provided in the column variable `cell_type` but avoid checking them until the end of this notebook to make these analyses more interesting. 
+
+The analyses performed in this notebook rely in the `Seurat` R package (v.`r packageVersion("Seurat")`). 
+
+
 
 ```{r setup, include=FALSE}
 ## Set up configuration for R chunks
@@ -39,15 +61,15 @@ knitr::opts_chunk$set(
 library("dplyr") 
 library("Seurat") # scRNA-seq analysis
 library("patchwork")
-if (!"SeuratWrappers" %in% installed.packages()) remotes::install_github("satijalab/seurat-wrappers", "seurat5")
 library("SeuratWrappers")
-if (!"batchelor" %in% installed.packages()) BiocManager::install("batchelor")
-if ((!"matrixStats" %in% installed.packages()) | (packageVersion("matrixStats")>"1.1.0")) {
-  remotes::install_version("matrixStats", version="1.1.0")
-} 
-if (!"ComplexHeatmap" %in% installed.packages()) remotes::install_github("jokergoo/ComplexHeatmap")
-if (!"zellkonverter" %in% installed.packages()) BiocManager::install("zellkonverter")
 ```
+
+```{r dirs}
+## Output directories
+res.dir <- file.path("../results", "pbmc3k_panc8", c("plots", "tables", "objects"))
+for (folder in res.dir) if (!dir.exists(folder)) dir.create(path = folder, recursive = TRUE)
+```
+
 
 <br>
 
@@ -249,12 +271,24 @@ ComplexHeatmap::Heatmap(matrix = as.matrix(shared.genes.table), name = "Shared g
 
 ```{r automatic cell annotation}
 ## Automatic cell annotation
-# sce <- as.SingleCellExperiment(seu)
-# zellkonverter::writeH5AD(sce, file = file.path("../results", "pbmc3k_pancreas.h5ad"))
+file.name <- file.path(res.dir[3], "pbmc3k_panc8_celltypist.h5ad")
+cat("Exporting Seurat object as '.h5ad' format to:", gsub("\\../", "", file.name), "\n")
+zellkonverter::writeH5AD(sce = as.SingleCellExperiment(seu), file = file.name, X_name = "logcounts")
+```
+
+```{r automatic cell annotation - plot}
+## Plot labels from CellTypist
+untar(tarfile = file.path(res.dir[2], "predictions.tar.gz"), exdir = res.dir[2])
+seu@meta.data[,c("predicted_labels", "over_clustering", "majority_voting")] <- read.table(file = file.path(res.dir[2],
+                                                                                                           "predicted_labels.csv"),
+                                                                                          header = TRUE, sep = ",", row.names = 1)
+DimPlot(object = seu, reduction = "umap.unintegrated", group.by = "majority_voting", 
+        split.by = "batch", pt.size = 0.1, label = TRUE)
+
 ```
 
 <br>
-
+  
 <br>
 
 ---
