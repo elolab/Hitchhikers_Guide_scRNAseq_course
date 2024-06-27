@@ -1,3 +1,16 @@
 data
 scripts/.Rhistory
 notebooks/.Rhistory
+sctoolkit.sh
+rsessions
+img
+.config
+.local
+.singularity
+R
+docker
+.Rhistory
+.bash_history
+.conda
+.python_history
+results
