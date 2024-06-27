@@ -59,7 +59,7 @@ RUN R --no-echo --no-restore --no-save -e "BiocManager::install('batchelor')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_version('matrixStats', version = '1.1.0')"
 
 # Install CellTypist python package and dependencies: 
-RUN pip3 install 'matplotlib==3.6.3' 'numpy==1.23.5' 'scanpy==1.9.1' \
+RUN pip3 install 'matplotlib==3.6.3' 'numpy==1.23.5' 'pandas==1.5.3' 'scanpy==1.9.1' \
     'anndata==0.7.8' 'celltypist==1.3.0' 
 RUN R --no-echo --no-restore --no-save -e "BiocManager::install('LoomExperiment')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('cellgeni/sceasy')"
