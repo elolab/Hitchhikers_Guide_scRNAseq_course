@@ -57,6 +57,7 @@ RUN R --no-echo --no-restore --no-save -e "install.packages('Seurat')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-wrappers', 'seurat5')"
 RUN R --no-echo --no-restore --no-save -e "BiocManager::install('batchelor')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_version('matrixStats', version = '1.1.0')"
+RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-data')"
 
 # Install CellTypist python package and dependencies: 
 RUN pip3 install 'matplotlib==3.6.3' 'numpy==1.23.5' 'pandas==1.5.3' 'scanpy==1.9.1' \
