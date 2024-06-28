@@ -77,6 +77,9 @@ RUN R --no-echo --no-restore --no-save -e "BiocManager::install('DropletUtils')"
 # Visualization
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('jokergoo/ComplexHeatmap')"
 
+# Integration metrics
+RUN R --no-echo --no-restore --no-save -e "remotes::install_github('carmonalab/scIntegrationMetrics')"
+
 # Descriptions: 
 MAINTAINER António Sousa (aggode@utu.fi)
 LABEL Description: The Hitchhikers Guide to scRNA-seq course container
