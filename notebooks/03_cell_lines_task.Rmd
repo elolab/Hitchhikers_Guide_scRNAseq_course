@@ -1,6 +1,6 @@
 ---
 title: "Cell lines integration task"
-author: "António Sousa (e-mail: <aggode@utu.fi>)"
+author: "António Sousa (e-mail: <aggode@utu.fi>) - Elo lab (<https://elolab.utu.fi>)"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: 
    html_document:
@@ -242,46 +242,6 @@ t293.markers.unint.plot <- FeaturePlot(seu, features = markers.plot$t293, split.
 # Print 
 jurkat.markers.unint.plot 
 t293.markers.unint.plot
-```
-
-<br>
-
-### Manual cell annotation
-
-_(15 min)_
-
->AIM: Check the number of differentially expressed genes for dataset-specific clusters shared between datasets. 
-
-<br>
-
-Split the `Seurat` object into a list of two `Seurat` objects (one per dataset) and run the standard `Seurat` workflow for each. After calculating the PCA, run `FindNeighbors()` and `FindClusters()` sequentially to perform graph-based clustering for each dataset, in order to determine the dataset-specific cluster markers.
-
-```{r independent sample analysis}
-## Independent sample analysis
-
-# Split Seurat object into two batch on 'batch' label identity
-seu.list <- SplitObject(object = seu, split.by = "batch")
-
-# Standard Seurat upstream workflow
-seu.list <- lapply(X = seu.list, FUN = function(x) {
-  x <- NormalizeData(x)
-  x <- FindVariableFeatures(x)
-  x <- ScaleData(x)
-  x <- RunPCA(x)
-  x <- FindNeighbors(x, dims = 1:15, reduction = "pca")
-  x <- FindClusters(x, resolution = 0.1, cluster.name = "unintegrated_clusters")
-  x <- RunUMAP(x, dims = 1:15, reduction = "pca", reduction.name = "umap.unintegrated")
-})
-```
-
-Plot UMAPs for both datasets highlighting the `Seurat` clusters found for each.
-
-```{r plot independent sample analysis clusters, fig.width=10, fig.height=3}
-## Plot independent sample analysis clusters
-umap.ind.samp.unint <- lapply(X = seu.list, FUN = function(x) {
-  DimPlot(x, reduction = "umap.unintegrated", group.by = "unintegrated_clusters", pt.size = 0.5)
-})
-umap.ind.samp.unint$t293 + umap.ind.samp.unint$jurkat + umap.ind.samp.unint$`jurkat_t293_50:50`
 ```
 
 <br>

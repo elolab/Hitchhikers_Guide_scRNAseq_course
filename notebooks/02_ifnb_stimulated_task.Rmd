@@ -1,6 +1,6 @@
 ---
 title: "Ifnb stimulated integration task"
-author: "António Sousa (e-mail: <aggode@utu.fi>)"
+author: "António Sousa (e-mail: <aggode@utu.fi>) - Elo lab (<https://elolab.utu.fi>)"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: 
    html_document:
@@ -24,7 +24,7 @@ output:
 
 <br>
 
-This single-cell RNA-seq integration task describes an example of an integration analysis involving different biological conditions: resting (named `CTRL`) versus interferon stimulated (named `STIM`) human peripheral blood mononuclear cells (PBMCs). The data set with cells coming from both biological conditions was retrieved from the `SeuratData` (v.0.2.2.9001): 
+This single-cell RNA-seq integration task describes an example of an integration analysis involving different biological conditions: resting (named `CTRL`) versus interferon stimulated (named `STIM`) human peripheral blood mononuclear cells (PBMCs). The data set with cells coming from both biological conditions was retrieved from the `SeuratData` (v.`r packageVersion("SeuratData")`): 
 
    + **ifnb** (resting and ifnb stimulated data sets): 
    

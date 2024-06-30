@@ -4,8 +4,9 @@
 #(1) w/o shared cell types
 #(2) w/ shared cell types
 #(3) w/ some shared cell types
+#(4) reference-mapping task
 # Date: 22/06/2024
-# Last update: 22/06/20224
+# Last update: 30/06/20224
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
@@ -16,6 +17,7 @@
 library("Seurat") # v.5.1.0
 if (!"SeuratData" %in% installed.packages()) devtools::install_github("satijalab/seurat-data") # if isn't installed, install 'SeuratData' 
 library("SeuratData") # v.0.2.2.9001
+library("Azimuth")
 
 # Set seed
 set.seed(1024)
@@ -146,6 +148,37 @@ seu <- subset(seu, cells = colnames(seu)[!is.na(seu$cell_type)])
 
 # Save object
 saveRDS(object=seu, file=output)
+
+# Clean env vars
+rm(list = ls()[ls() != "data.dir"]); gc(); 
+#
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
+#
+## (4) reference-mapping task
+
+# Create file name to save Seurat file 
+output.query <- file.path(data.dir, "covid.rds")
+output.ref <- file.path(data.dir, "pbmcref.rds")
+
+## Query
+# Download file from https://cellxgene.cziscience.com - study from Guo et al. 
+data2down <- "https://datasets.cellxgene.cziscience.com/c6371ff2-d6b8-42e4-8f5d-099e25b4de8e.rds"
+download.file(url = data2down, destfile = output.query)
+query <- readRDS(file = output.query)
+stopifnot(all(row.names(query) == row.names(query@assays$RNA@meta.features)))
+counts <- query@assays$RNA@counts
+data <- query@assays$RNA@data
+row.names(counts) <- row.names(data) <- query@assays$RNA@meta.features$feature_name
+query.new <- CreateSeuratObject(counts = counts, data = data, meta.data = query@meta.data)
+query.new@reductions <- query@reductions
+saveRDS(object = query.new, file = output.query)
+
+## Reference
+InstallData("pbmcref")
+ref <- LoadData("pbmcref", type = "azimuth")
+saveRDS(object = ref$map, file = file.path(data.dir, "pbmcref.rds"))
 
 # Clean env vars
 rm(list = ls()[ls() != "data.dir"]); gc(); 

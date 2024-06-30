@@ -1,6 +1,6 @@
 ---
 title: "Cross-tissue integration task"
-author: "António Sousa (e-mail: <aggode@utu.fi>)"
+author: "António Sousa (e-mail: <aggode@utu.fi>) - Elo lab (<https://elolab.utu.fi>)"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: 
    html_document:
