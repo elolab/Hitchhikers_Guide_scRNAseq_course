@@ -80,6 +80,10 @@ RUN R --no-echo --no-restore --no-save -e "remotes::install_github('jokergoo/Com
 # Integration metrics
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('carmonalab/scIntegrationMetrics')"
 
+# Reference-mapping
+RUN apt-get install -y libbz2-dev
+RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/azimuth')"
+
 # Descriptions: 
 MAINTAINER António Sousa (aggode@utu.fi)
 LABEL Description: The Hitchhikers Guide to scRNA-seq course container
