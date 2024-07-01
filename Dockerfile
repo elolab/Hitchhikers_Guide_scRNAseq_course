@@ -86,9 +86,11 @@ RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/az
 
 # Create directory structure & distribute data, scripts, notebooks
 RUN mkdir -p /home/rstudio/results /home/rstudio/scripts /home/rstudio/notebooks /home/rstudio/data 
-COPY ../data/covid.rds ../data/ifnb.rds data/jurkat.rds ../data/pbmc3k_panc8.rds ../data/pbmcref.rds /home/rstudio/data/
-#COPY ../notebooks/01_cross_tissue_task.Rmd ../notebooks/02_ifnb_stimulated_task.Rmd ../notebooks/03_cell_lines_task.Rmd ../notebooks/04_covid_refmap_task.Rmd /home/rstudio/notebooks/
-#COPY ../scripts/01_create_datasets.R /home/rstudio/scripts/
+COPY ../data/covid.rds ../data/ifnb.rds data/jurkat.rds \
+	../data/pbmc3k_panc8.rds ../data/pbmcref.rds /home/rstudio/data/
+COPY ../notebooks/01_cross_tissue_task.Rmd ../notebooks/02_ifnb_stimulated_task.Rmd \
+	../notebooks/03_cell_lines_task.Rmd ../notebooks/04_covid_refmap_task.Rmd /home/rstudio/notebooks/
+COPY ../scripts/01_create_datasets.R /home/rstudio/scripts/
 
 # Descriptions: 
 MAINTAINER António Sousa (aggode@utu.fi)
