@@ -32,7 +32,7 @@ This single-cell RNA-seq reference-mapping task describes an example of referenc
       
 <br>
 
-The analyses performed in this notebook rely in the `Seurat` (v.`r packageVersion("Seurat")`). 
+The analyses performed in this notebook rely in the `Seurat` (v.`r packageVersion("Seurat")`) and `Azimuth` (v.`r packageVersion("Azimuth")`). 
 
 ```{r setup, include=FALSE}
 ## Set up configuration for R chunks
@@ -100,7 +100,7 @@ ref <- readRDS(file = file.path(data.dir, "pbmcref.rds"))
 query <- readRDS(file = file.path(data.dir, "covid.rds"))
 ```
 
-Explore quickly the `Seurat` `query` and `ref`` objects.
+Explore quickly the `Seurat` `query` and `ref` objects.
 
 ```{r explore Seurat objects}
 ## Explore Seurat objects
@@ -109,8 +109,8 @@ query
 ref
 
 # Structure
-str(query)
-str(ref)
+#str(query)
+#str(ref)
 
 # Check meta.data
 head(query@meta.data)
@@ -153,15 +153,15 @@ Check the metadata of query and reference objects and choose the most interestin
 ## Dimensional reduction - visualization
 
 ## Reference 
-head(ref@meta.data)
+colnames(ref@meta.data)
 ref.vars <- c("celltype.l1", "celltype.l2")
 ref.umap.plts <- lapply(X = ref.vars, function(x) {
   DimPlot(object = ref, reduction = "refUMAP", group.by = x, pt.size = 0.1, label = TRUE)
 })
 
 ## Query
-colnames(query@meta.data)[1] <- "disease_stage"
-head(query@meta.data)
+colnames(query@meta.data)[4] <- "disease_stage"
+colnames(query@meta.data)
 query.vars <- c("disease_stage", "donor_id", "timepoint", "Cell.group", "Cell.class_reannotated")
 query.umap.plts <- lapply(X = query.vars, function(x) {
   DimPlot(object = query, reduction = "umap", group.by = x, pt.size = 0.1, label = TRUE)
@@ -177,7 +177,7 @@ Plot the categorical variables `celltype.l1` and `celltype.l2` for the reference
 
 <br>
 
-Plot the categorical variables `disease_stage`, `donor_id`, `timepoint`, `sex`, `Cell.group`, `Cell.class_reannotated` for the query below. 
+Plot the categorical variables `disease_stage`, `donor_id`, `timepoint`, `Cell.group`, `Cell.class_reannotated` for the query below. 
 
 ```{r dimred - plot query, fig.width = 15, fig.height = 4.5}
 ## Plot dimensional reductions for reference
@@ -207,46 +207,41 @@ _(10 min)_
 
 <br>
 
-Perform reference-mapping below by identifying anchors between the COVID versus healthy PBMCs data sets and transferring the labels of interest (`celltype.l1`, `celltype.l2`) from the previously annotated healthy data set into the query COVID data set with the functions `FindTransferAnchors()` and `MapQuery()`. 
+Perform reference-mapping below by identifying anchors between the COVID versus healthy PBMCs data sets and transferring the labels of interest (`celltype.l1`, `celltype.l2`) from the previously annotated healthy data set into the query COVID data set with the functions `FindTransferAnchors()` and `MapQuery()`. Alternatively you can run the same procedure using the `Azimuth` function `RunAzimuth`. 
 
 ```{r refmap}
 ## Reference-mapping
 
 # Set to TRUE in case you wanna run with 'Azimuth'
-run.azimuth <- TRUE
+run.azimuth <- FALSE
 
 if (run.azimuth) {
-  query <- RunAzimuth(query, reference = "pbmcref")
+  query <- Azimuth::RunAzimuth(query, reference = "pbmcref")
 } else {
   # Find anchors
-  anchor <- FindTransferAnchors(
-  reference = ref,
-  query = query, 
-  k.filter = NA,
-  features = rownames(Loadings(ref[["refDR"]])),
-  reference.assay = "refAssay", 
-  query.assay = "RNA",
-  reference.reduction = "refDR",
-  normalization.method = "SCT",
-  reference.neighbors = "refdr.annoy.neighbors",
-  dims = 1:50
+  anchors <- FindTransferAnchors(
+    reference = ref,
+    query = query, 
+    features = rownames(Loadings(ref[["refDR"]])),
+    reference.reduction = "refDR",
+    normalization.method = "SCT",
+    dims = 1:50
   )
-  
   # Transfer labels
   query <- MapQuery(
-  anchorset = anchor,
-  query = query, 
-  reference = ref,
-  refdata = list(
-    celltype.l1 = "celltype.l1",
-    celltype.l2 = "celltype.l2"
-  ),
-  store.weights = TRUE,
-  transferdata.args = list(n.trees = 20), 
-  integrateembeddings.args = list(weight.reduction = "pcaproject"),
-  projectumap.args = list(l2.norm = TRUE),
-  reduction.model = "refUMAP"
+    anchorset = anchors,
+    query = query,
+    reference = ref,
+    refdata = list(
+      celltype.l1 = "celltype.l1",
+      celltype.l2 = "celltype.l2"
+    ),
+    reduction.model = "refUMAP"
   )
+  ## EXCEPTION (to project query onto reference UMAP): due to the Azimuth reference 'pbmcref'
+  query <- Azimuth:::NNTransform(object = query, meta.data = ref[[]]) # from 'RunAzimuth()'
+  query[["ref.umap"]] <- RunUMAP(object = query[["query_ref.nn"]], reduction.model = ref[["refUMAP"]], 
+                                  reduction.key = "UMAP_", verbose = TRUE)
 }
 
 # Save query R object
@@ -291,8 +286,14 @@ refmap.plts[[5]] <- DimPlot(query, reduction = "ref.umap", group.by = "predicted
                             label = TRUE, pt.size = 0.1, alpha = 0.1) +
   NoLegend()
 refmap.plts[[6]] <- DimPlot(query, reduction = "ref.umap", group.by = "predicted.celltype.l2", 
-                            label = TRUE, pt.size = 0.1, alpha = 0.1) + 
+                            label = TRUE, pt.size = 0.1, alpha = 0.1) +
   NoLegend()
+refmap.plts[[7]] <- DimPlot(query, reduction = "ref.umap", group.by =  query.vars[1], 
+                            label = TRUE, pt.size = 0.1, alpha = 0.1)
+refmap.plts[[8]] <- DimPlot(query, reduction = "ref.umap", group.by = query.vars[2], 
+                            label = TRUE, pt.size = 0.1, alpha = 0.1)
+refmap.plts[[9]] <- DimPlot(query, reduction = "ref.umap", group.by = query.vars[3], 
+                            label = TRUE, pt.size = 0.1, alpha = 0.1)
 
 # Confusion matrices
 celltype1xgroup <- table(query$predicted.celltype.l1, query$Cell.group)
@@ -351,6 +352,13 @@ refmap.plts[[3]] + refmap.plts[[4]]
 
 ```{r assess refmap accuracy - umaps query predicted, fig.width=9, fig.height=4.5}
 refmap.plts[[5]] + refmap.plts[[6]]
+```
+
+Plot the categorical variables `disease_stage`, `donor_id`, `timepoint` for the integrated query below. 
+
+```{r assess refmap accuracy - umaps query predicted vars, fig.width = 15, fig.height = 4.5}
+## Plot dimensional reductions for reference
+refmap.plts[[7]] + refmap.plts[[8]] + refmap.plts[[9]] 
 ```
 
 <br>
