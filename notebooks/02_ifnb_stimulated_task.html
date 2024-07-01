@@ -11,6 +11,7 @@
 
 <meta name="author" content="António Sousa (e-mail: aggode@utu.fi) - Elo lab (https://elolab.utu.fi)" />
 
+<meta name="date" content="2024-01-07" />
 
 <title>Ifnb stimulated integration task</title>
 
@@ -255,7 +256,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ifnb stimulated integration task</h1>
 <h4 class="author">António Sousa (e-mail: <a href="mailto:aggode@utu.fi" class="email">aggode@utu.fi</a>) - Elo lab (<a href="https://elolab.utu.fi" class="uri">https://elolab.utu.fi</a>)</h4>
-<h4 class="date">30/06/2024</h4>
+<h4 class="date">01/07/2024</h4>
 
 </div>
 
@@ -330,7 +331,7 @@ if (downsample) {
 }
 gc()</code></pre>
 <pre><code>##            used  (Mb) gc trigger (Mb) max used  (Mb)
-## Ncells  3442951 183.9    6551807  350  6366457 340.1
+## Ncells  3442951 183.9    6551874  350  6366457 340.1
 ## Vcells 11924856  91.0   44423825  339 45869596 350.0</code></pre>
 <pre class="r"><code>cat(&quot;No. of cells downsampled for `CTRL` was:&quot;, table(seu$stim)[1], &quot;\n&quot;)</code></pre>
 <pre><code>## No. of cells downsampled for `CTRL` was: 1310</code></pre>
@@ -797,7 +798,7 @@ for (m in names(int.methods)[1:4]) {
     seu &lt;- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 
                          orig.reduction = &quot;pca&quot;, 
                          new.reduction = int.dimred,
-                         conda_env = &quot;/home/aggs/miniconda3/envs/scvi-env&quot;, # substitute this by your installation 
+                         conda_env = &quot;~/miniconda3/envs/scvi-env&quot;, # substitute this by your installation 
                          verbose = TRUE)
   } else {
     seu &lt;- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 

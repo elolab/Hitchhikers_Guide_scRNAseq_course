@@ -294,7 +294,7 @@ for (m in names(int.methods)[1:4]) {
           seu <- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 
                          orig.reduction = "pca", 
                          new.reduction = int.dimred,
-                         conda_env = "/home/aggs/miniconda3/envs/scvi-env", # substitute this by your installation 
+                         conda_env = "~/miniconda3/envs/scvi-env", # substitute this by your installation 
                          verbose = TRUE)
   } else {
       seu <- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 

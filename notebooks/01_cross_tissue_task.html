@@ -11,6 +11,7 @@
 
 <meta name="author" content="António Sousa (e-mail: aggode@utu.fi) - Elo lab (https://elolab.utu.fi)" />
 
+<meta name="date" content="2024-01-07" />
 
 <title>Cross-tissue integration task</title>
 
@@ -255,7 +256,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Cross-tissue integration task</h1>
 <h4 class="author">António Sousa (e-mail: <a href="mailto:aggode@utu.fi" class="email">aggode@utu.fi</a>) - Elo lab (<a href="https://elolab.utu.fi" class="uri">https://elolab.utu.fi</a>)</h4>
-<h4 class="date">30/06/2024</h4>
+<h4 class="date">01/07/2024</h4>
 
 </div>
 
@@ -810,7 +811,7 @@ int.methods &lt;- c(&quot;CCA&quot; = &quot;CCAIntegration&quot;, &quot;RPCA&quo
                  &quot;Harmony&quot; = &quot;HarmonyIntegration&quot;, &quot;FastMNN&quot; = &quot;FastMNNIntegration&quot;, 
                  &quot;scVI&quot; = &quot;scVIIntegration&quot;)
 
-for (m in names(int.methods)[1:4]) {
+for (m in names(int.methods)[1:4]) { 
   cat(&quot;\nRunning integration method&quot;, m, &quot;...\n&quot;)
   int.dimred &lt;- paste0(&quot;integrated.&quot;, m)
   umap.dimred &lt;- paste0(&quot;umap.&quot;, m)
@@ -825,7 +826,7 @@ for (m in names(int.methods)[1:4]) {
           seu &lt;- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 
                                  orig.reduction = &quot;pca&quot;, 
                                  new.reduction = int.dimred,
-                                 conda_env = &quot;/home/aggs/miniconda3/envs/scvi-env&quot;, # substitute this by your installation 
+                                 conda_env = &quot;~/miniconda3/envs/scvi-env&quot;, # substitute this by your installation 
                                  verbose = TRUE)
   } else {
       seu &lt;- IntegrateLayers(object = seu, method = get(eval(substitute(int.methods[m]))), 
