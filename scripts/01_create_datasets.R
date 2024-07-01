@@ -19,6 +19,9 @@ if (!"SeuratData" %in% installed.packages()) devtools::install_github("satijalab
 library("SeuratData") # v.0.2.2.9001
 library("Azimuth")
 
+# Set WD
+setwd("scripts")
+
 # Set seed
 set.seed(1024)
 
@@ -32,7 +35,7 @@ options(timeout = 60*10)
 
 #------------------------------------------------------------------------------#
 #
-## (1) w/o shared cell types: ifnb x panc8
+## (1) w/o shared cell types: pbmc3k x panc8
 
 # Create directory to save files
 output <- file.path(data.dir, "pbmc3k_panc8.rds")
@@ -75,7 +78,7 @@ rm(list = ls()[ls() != "data.dir"]); gc();
 output <- file.path(data.dir, "ifnb.rds")
 
 # Install data
-#InstallData("ifnb") # run it only if not installed above
+InstallData("ifnb") # run it only if not installed above
 
 # Load data
 ifnb <- LoadData("ifnb")
