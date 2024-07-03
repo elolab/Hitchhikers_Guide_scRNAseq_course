@@ -24,7 +24,7 @@ output:
 
 <br>
 
-This single-cell RNA-seq reference-mapping task describes an example of reference-mapping a human COVID-19 peripheral blood mononuclear cells (PBMC) against a previously annotate human PBMC data set. The COVID data set was downloaded as `Seurat` object from (cziscience)[https://cellxgene.cziscience.com] (see the R script `01_create_datasets.R`) and the reference previously annotated PBMC data set retrieved from `SeuratData` (v.`r packageVersion("SeuratData")`): 
+This single-cell RNA-seq reference-mapping task describes an example of reference-mapping a human COVID-19 peripheral blood mononuclear cells (PBMC) against a previously annotate human PBMC data set. The COVID data set was downloaded as `Seurat` object from [cziscience](https://cellxgene.cziscience.com) (see the R script `01_create_datasets.R`) and the reference previously annotated PBMC data set retrieved from `SeuratData` (v.`r packageVersion("SeuratData")`): 
 
    + reference (`ref`): 5,000 genes x 36,433 cells
    
