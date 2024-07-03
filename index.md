@@ -35,7 +35,7 @@
 
 ### Overview
 
-This site serves as a repository for the [course materials](#course-materials) provided on the second day of  given during the second day of [The Hitchhiker's Guide to scRNA-seq](https://www.medicina.ulisboa.pt/en/hitchhikers-guide-scrna-seq) (08-12/07/2024, iMM, Lisbon, Portugal), which focuses on the integration of single-cell RNA sequencing data. 
+This site serves as a repository for the [course materials](#course-materials) provided on the second day of the course [The Hitchhiker's Guide to scRNA-seq](https://www.medicina.ulisboa.pt/en/hitchhikers-guide-scrna-seq) (08-12/07/2024, iMM, Lisbon, Portugal), which focuses on the integration of single-cell RNA sequencing data. 
 
 The [course materials](#course-materials) utilize minimalistic, publicly available scRNA-seq datasets to evaluate the performance of various integration methods across three tasks: (1) cross-tissue, (2) biological conditions, and (3) cell lines. The course addresses the challenges of integration, highlighting the strengths and weaknesses of different methods applied to these tasks. Additionally, a practical example of reference mapping is demonstrated by classifying and projecting PBMCs from two COVID-19 patients onto a previously annotated PBMC reference.
 
