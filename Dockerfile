@@ -56,7 +56,6 @@ RUN R --no-echo --no-restore --no-save -e "install.packages('remotes')"
 RUN R --no-echo --no-restore --no-save -e "install.packages('Seurat')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-wrappers', 'seurat5')"
 RUN R --no-echo --no-restore --no-save -e "BiocManager::install('batchelor')"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_version('matrixStats', version = '1.1.0')"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-data')"
 
 # Install CellTypist python package and dependencies: 
@@ -83,14 +82,15 @@ RUN R --no-echo --no-restore --no-save -e "remotes::install_github('carmonalab/s
 # Reference-mapping
 RUN apt-get install -y libbz2-dev
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/azimuth')"
+RUN R --no-echo --no-restore --no-save -e "remotes::install_version('matrixStats', version = '1.1.0')"
 
 # Create directory structure & distribute data, scripts, notebooks
 RUN mkdir -p /home/rstudio/results /home/rstudio/scripts /home/rstudio/notebooks /home/rstudio/data 
-COPY ../data/covid.rds ../data/ifnb.rds data/jurkat.rds \
-	../data/pbmc3k_panc8.rds ../data/pbmcref.rds /home/rstudio/data/
-COPY ../notebooks/01_cross_tissue_task.Rmd ../notebooks/02_ifnb_stimulated_task.Rmd \
-	../notebooks/03_cell_lines_task.Rmd ../notebooks/04_covid_refmap_task.Rmd /home/rstudio/notebooks/
-COPY ../scripts/01_create_datasets.R /home/rstudio/scripts/
+COPY course/hands-on/data/covid.rds course/hands-on/data/ifnb.rds course/hands-on/data/jurkat.rds \
+	course/hands-on/data/pbmc3k_panc8.rds course/hands-on/data/pbmcref.rds /home/rstudio/data/
+COPY course/hands-on/notebooks/01_cross_tissue_task.Rmd course/hands-on/notebooks/02_ifnb_stimulated_task.Rmd \
+	course/hands-on/notebooks/03_cell_lines_task.Rmd course/hands-on/notebooks/04_covid_refmap_task.Rmd /home/rstudio/notebooks/
+COPY course/hands-on/scripts/01_create_datasets.R /home/rstudio/scripts/
 
 # Descriptions: 
 MAINTAINER António Sousa (aggode@utu.fi)
