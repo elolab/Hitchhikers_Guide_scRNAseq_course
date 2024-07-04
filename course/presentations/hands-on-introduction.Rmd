@@ -280,13 +280,15 @@ unint.dimreds[[3]] + unint.dimreds[[4]]
 
 ### Clustering
 
-```{r clustering, message=FALSE, warning=FALSE, include=FALSE}
+```{r clustering, message=FALSE, warning=FALSE}
 # graph-based clustering
 seu <- FindNeighbors(seu, dims = 1:30, reduction = "pca") # shared nearest-neighbor graph
 seu <- FindClusters(seu, resolution = 2, cluster.name = "unintegrated_clusters") # cell population detection - Louvain algorithm
 unint.dimreds[["umap_clusters"]] <- DimPlot(seu, reduction = "umap.unintegrated", 
                                             group.by = "unintegrated_clusters", pt.size = 0.1, alpha = 0.5)
 ```
+
+---
 
 ```{r clustering - print, fig.height=4, fig.width=14}
 unint.dimreds[[3]] + unint.dimreds[[4]] + unint.dimreds[[5]]
@@ -302,12 +304,16 @@ unint.dimreds[[3]] + unint.dimreds[[4]] + unint.dimreds[[5]]
 
 <small>Split `layers` before integration by providing the cell `batch` label identity.</small>
 
-```{r split layers}
+```{r split layers - part 1}
 # how does it look the object before splitting
 seu
 
 # split the 'layers' by 'batch'
 seu[["RNA"]] <- split(x = seu[["RNA"]], f = seu$batch)
+```
+
+```{r split layers - part 2}
+# Seurat object after split
 seu
 ```
 
@@ -411,7 +417,7 @@ refmap.dimreds[[1]] + refmap.dimreds[[2]] + refmap.dimreds[[3]] + refmap.dimreds
 
 <small>Custom reference-mapping can be performed by calling the `Seurat` functions `FindTransferAnchors()` and `MapQuery()`.</small>
 
-```{r refmap customized reference, message=FALSE, warning=FALSE, include=FALSE}
+```{r refmap customized reference, message=FALSE, warning=FALSE}
 ## customized reference
 # split Seurat object into reference and query
 seu.list <- SplitObject(object = seu, split.by = "batch")
