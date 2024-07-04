@@ -65,7 +65,12 @@ The timeline for the second day of the course (09/07/2024):
 
 ### Course materials 
 
-Introduction to integration of scRNA-seq data: [presentation](course/presentations/theoretical-introduction.pdf).
+Introduction to integration of scRNA-seq data: 
+
+   + **theoretical**: [presentation](course/presentations/theoretical-introduction.pdf)
+   
+   + **hands-on**: [presentation](course/presentations/hands-on-introduction.html)
+
 
 The course materials include four independent data analysis tasks: 
 
