@@ -72,6 +72,8 @@ Introduction to integration of scRNA-seq data:
    + **hands-on**: [presentation](course/presentations/hands-on-introduction.html)
 
 
+<br>
+
 The course materials include four independent data analysis tasks: 
 
    1. _Cross-tissue integration task_
