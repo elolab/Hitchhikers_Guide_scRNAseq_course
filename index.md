@@ -1,4 +1,21 @@
-## The Hitchhiker's Guide to scRNA-seq course 
+---
+title: "The Hitchhiker's Guide to scRNA-seq"
+---
+
+## Integration
+
+<br>
+
+This site serves as a repository for the [course materials](#course-materials) provided on the second day of the course [The Hitchhiker's Guide to scRNA-seq](https://www.medicina.ulisboa.pt/en/hitchhikers-guide-scrna-seq) (08-12/07/2024, iMM, Lisbon, Portugal), which focuses on the integration of single-cell RNA sequencing data. 
+
+The [course materials](#course-materials) utilize minimalistic, publicly available scRNA-seq datasets to evaluate the performance of various integration methods across three tasks: (1) cross-tissue, (2) biological conditions, and (3) cell lines. The course addresses the challenges of integration, highlighting the strengths and weaknesses of different methods applied to these tasks. Additionally, a practical example of reference mapping is demonstrated by classifying and projecting PBMCs from two COVID-19 patients onto a previously annotated PBMC reference
+
+<br>
+
+<p align="center">
+  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_batch_UMAP.gif" width="400" />
+  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_celltype_UMAP.gif" width="410" /> 
+</p>
 
 <br>
 
@@ -7,8 +24,6 @@
 <br>
 
 ### Table of contents
-
-   + [Overview](#overview)
    
    + [Outline](#outline)
 
@@ -25,19 +40,6 @@
    + [Disclaimer](#disclaimer)
 
    + [Acknowledgements](#acknowledgements)
-
-
-<br>
-
----
-
-<br>
-
-### Overview
-
-This site serves as a repository for the [course materials](#course-materials) provided on the second day of the course [The Hitchhiker's Guide to scRNA-seq](https://www.medicina.ulisboa.pt/en/hitchhikers-guide-scrna-seq) (08-12/07/2024, iMM, Lisbon, Portugal), which focuses on the integration of single-cell RNA sequencing data. 
-
-The [course materials](#course-materials) utilize minimalistic, publicly available scRNA-seq datasets to evaluate the performance of various integration methods across three tasks: (1) cross-tissue, (2) biological conditions, and (3) cell lines. The course addresses the challenges of integration, highlighting the strengths and weaknesses of different methods applied to these tasks. Additionally, a practical example of reference mapping is demonstrated by classifying and projecting PBMCs from two COVID-19 patients onto a previously annotated PBMC reference.
 
 <br>
 
