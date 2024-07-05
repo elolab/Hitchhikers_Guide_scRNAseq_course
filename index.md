@@ -1,3 +1,7 @@
+---
+title: "The Hitchhiker’s Guide to scRNA-seq course"
+---
+
 ## Integration
 
 This site serves as a repository for the [course materials](#course-materials) provided on the second day of the course [The Hitchhiker's Guide to scRNA-seq](https://www.medicina.ulisboa.pt/en/hitchhikers-guide-scrna-seq) (08-12/07/2024, iMM, Lisbon, Portugal), which focuses on the integration of single-cell RNA sequencing data. 
