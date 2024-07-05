@@ -11,8 +11,8 @@ The [course materials](#course-materials) utilize minimalistic, publicly availab
 <br>
 
 <p align="center">
-  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_batch_UMAP.gif" width="400" />
-  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_celltype_UMAP.gif" width="410" /> 
+  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_batch_UMAP.gif" width="350" />
+  <img style="vertical-align: top;" src="figs/seurat_cca_integrated_celltype_UMAP.gif" width="360" /> 
 </p>
 
 <br>
