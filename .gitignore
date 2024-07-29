@@ -18,3 +18,5 @@ results
 .bashrc
 .condarc
 .wget-hsts
+docker
+sctoolkit.sh
